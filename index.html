@@ -129,34 +129,31 @@
     <script src="script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script>
-document.getElementById("contact-form").addEventListener("submit", async function(e) {
-  e.preventDefault(); // ngăn reload trang
+  <script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQy6kCH6V2xHxbMpSOZBZLQGR5_E_IbWbg7jub64TuTDhj9hVvHGBsQKgHePRMHRZAWQ/exec";
 
-  const name = document.getElementById("nameField").value;
-  const email = document.getElementById("emailField").value;
-  const phone = document.getElementById("phonenumberField").value;
-  const birthday = document.getElementById("birthdayField").value;
+    document.getElementById("contact-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("nameField").value;
+      const email = document.getElementById("emailField").value;
+      const phone = document.getElementById("phonenumberField").value;
+      const birthday = document.getElementById("birthdayField").value;
 
-  try {
-    const res = await fetch("http://localhost:3001/send", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, phone, birthday }),
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, phone, birthday }),
+        });
+        document.getElementById("form-message").innerText = "✅ Gửi thành công!";
+        document.getElementById("contact-form").reset();
+      } catch (error) {
+        console.error(error);
+        document.getElementById("form-message").innerText = "❌ Gửi thất bại!";
+      }
     });
-
-    if (res.ok) {
-      alert("✅ Gửi thành công!");
-      document.getElementById("contact-form").reset();
-    } else {
-      alert("❌ Có lỗi khi gửi dữ liệu!");
-    }
-  } catch (error) {
-    console.error("Lỗi gửi form:", error);
-    alert("❌ Kết nối thất bại đến server!");
-  }
-});
-</script>
+  </script>
 
 </body>
 </html>
