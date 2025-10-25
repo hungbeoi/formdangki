@@ -92,7 +92,7 @@
         <div class="container contact-container">
             <div class="form-container">
                 <h2>Đăng ký nhận thông tin</h2>
-                <form class="contact-form" id="contact-form" target="_self" onsubmit="return postToGoogle();"action="#">
+                <form class="contact-form" id="contact-form" >
                     <input type="text" id="nameField" name="entry.1027995480" placeholder="Tên của bạn" required>
                     <input type="email" id="emailField" name="entry.811331298" placeholder="Email của bạn" required>
                     <input type="tel" id="phonenumberField" name="entry.1679959855" placeholder="Số điện thoại của bạn" required>
@@ -140,7 +140,7 @@
       const birthday = document.getElementById("birthdayField").value;
 
       try {
-        await fetch("1UYYiHnDYXeQad2gJ5t-wDP9dyKn2lpI2EgEDD7h02q0", {
+        await fetch(GOOGLE_SCRIPT_URL, {
           method: "POST",
           mode: "no-cors",
           headers: { "Content-Type": "application/json" },
